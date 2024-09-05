@@ -1,9 +1,9 @@
 import { Catch, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
+// import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 
-@CatchErrors()
+// @CatchErrors()
 @Injectable()
 export class UsersService {
   create(createUserDto: CreateUserDto) {

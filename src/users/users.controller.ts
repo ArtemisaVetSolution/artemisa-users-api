@@ -2,11 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
+import { LogClass } from 'src/common/decorators/catch-errors.decorator';
+// import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 
 
 @Controller('users')
-@CatchErrors()
+@LogClass()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
