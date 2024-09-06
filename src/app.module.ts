@@ -4,8 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DatabaseConfigService, envValidationSchema } from './common/config/index';
 import { LoggerService } from './common/services/index';
-// import { CommonModule } from './common/common.module';
 import { UsersModule } from './users/users.module';
+import { AllExceptionsFilter, ValidationExceptionFilter } from './common/errors/exception-filters';
+import { InterceptorsModule } from './common/interceptors/interceptors.module';
+import { CommonModule } from './common/common.module';
+
+
 
 @Module({
   imports: [
@@ -19,10 +23,23 @@ import { UsersModule } from './users/users.module';
       useClass: DatabaseConfigService
     }),
     UsersModule,
-    // CommonModule,
+    InterceptorsModule,
+    CommonModule,
   ],
   providers: [
-    LoggerService
+    LoggerService,
+    {
+      provide: 'APP_FILTER',
+      useClass: AllExceptionsFilter,
+    },
+    {
+      provide: 'APP_FILTER',
+      useClass: ValidationExceptionFilter,
+    },
+    {
+      provide: 'ILoggerService',
+      useClass: LoggerService,
+    }
   ],
 })
 export class AppModule {}

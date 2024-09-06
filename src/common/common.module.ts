@@ -1,11 +1,14 @@
-// import { Module } from '@nestjs/common';
-// import { CatchErrorsDecorator } from './decorators/catch-errors.decorator';
-// import { LoggerService } from './services';
-// import { ExceptionHandlerService } from './services/exception-handler.service';
+import { Module } from '@nestjs/common';
+import { InterceptorsModule } from './interceptors/interceptors.module';
 
+@Module({
+    providers: [],
+    imports: [
+        InterceptorsModule
+    ],
+    exports: [
+        InterceptorsModule
+    ]
+})
 
-// @Module({
-//   providers: [CatchErrorsDecorator, LoggerService, ExceptionHandlerService],
-//   exports: [CatchErrorsDecorator],
-// })
-// export class CommonModule {}
+export class CommonModule {}
