@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { setupGlobalConfig } from './common/config/global-config';
 import { LoggerService } from './common/services';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { SwaggerConfig } from './common/config/swagger.config';
 
 async function bootstrap() {

@@ -20,13 +20,17 @@ export class CreateUserDto {
     @MaxLength(50)
     @Matches(
         /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-            message: 'The password must have a Uppercase, lowercase letter and a number'
+            message: 'password - The password must have a Uppercase, lowercase letter and a number'
     })
     password: string;
 
     @ApiProperty({ description: "User's cellphone", example: '+57 3128985580' })
     @IsString()
-    @IsPhoneNumber(null, { message: 'The cellphone number must be a valid phone number' })
+    @IsPhoneNumber(null, { message: 'cellphone - The cellphone number must be a valid phone number' })
     cellphone: string;
    
+    @ApiProperty({ description: "User's role", example: 'admin' })
+    @IsEnum(UserRole)
+    @IsOptional()
+    role: UserRole;
 }

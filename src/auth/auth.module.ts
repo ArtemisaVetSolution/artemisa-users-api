@@ -10,10 +10,12 @@ import { User } from '../users/entities/users.entity';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
+import { Permission } from 'src/users/entities';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Permission]),
     ConfigModule,
     PassportModule,
     JwtModule.registerAsync({
@@ -32,6 +34,7 @@ import { UsersModule } from 'src/users/users.module';
       provide: 'IAuthService',
       useClass: AuthService,
     },
+    UsersService,
     JwtAuthGuard,
     JwtStrategy,
   ],

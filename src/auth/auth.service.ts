@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
@@ -11,6 +11,10 @@ import { User } from '../users/entities/users.entity';
 import { IAuthService } from './interfaces/auth-service.interface';
 import { LoginUserDto, CreateUserDto } from './dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { Permission } from 'src/users/entities';
+import { UsersService } from '../users/users.service';
+import { UserRole } from 'src/common/enums';
+import { log } from 'console';
 
 
 @Injectable()
@@ -18,7 +22,8 @@ export class AuthService implements IAuthService{
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly usersService: UsersService
   ) {}
 
   @CatchErrors() 
@@ -38,20 +43,25 @@ export class AuthService implements IAuthService{
   @CatchErrors()
   async login(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
-    console.log('Login data:', email, password);  
-
     const user = await this.validateUser(email, password);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    const payload: JwtPayload = { email: user.email, id: user.id };
-    console.log('JWT Payload:', payload); 
+    const userPermissions = await this.getPermissionsByUserRole(user.role);
+    const payload: JwtPayload = { email: user.email, id: user.id, permisions: userPermissions };
     const token = this.getJwtToken(payload);
     return {
       ...user,
       token,
     }
+  }
+  
+  @CatchErrors()
+  async getPermissionsByUserRole(role: UserRole) {
+    const permissions: Permission[] = await this.usersService.getPermissionsByUserRole(role);
+    
+    if (!permissions) throw new NotFoundException('Permissions not found');
+    return permissions;
   }
 
   
@@ -59,7 +69,7 @@ export class AuthService implements IAuthService{
   
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { password: true, email: true, id: true} });
+      select: { password: true, email: true, id: true, role: true} });
     if (!user) {
       console.log('User not found');
       return null;
@@ -68,21 +78,17 @@ export class AuthService implements IAuthService{
     const password = user.password
     if (bcrypt.compareSync(pass, password)) {
       const { password, ...result } = user;
-      return {email: user.email, id: user.id};
+      return {email: user.email, id: user.id, role: user.role};
     } else {
       console.log('Password does not match');
+      return null;
     }
   
-    return null;
   }
   
   private getJwtToken( payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
-    console.log('Signing JWT with payload:', payload); 
-    console.log(token);
-    
     return token;
   }
-
 
 }

@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DatabaseConfigService, envValidationSchema } from './common/config/index';
@@ -9,6 +9,7 @@ import { AllExceptionsFilter, ValidationExceptionFilter } from './common/errors/
 import { InterceptorsModule } from './common/interceptors/interceptors.module';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
+import { PermissionsSeeder, SeederRunner, UsersSeeder } from './common/seeders';
 
 
 
@@ -30,6 +31,9 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   providers: [
+    UsersSeeder,
+    PermissionsSeeder,
+    SeederRunner,
     LoggerService,
     {
       provide: 'APP_FILTER',
@@ -45,4 +49,23 @@ import { AuthModule } from './auth/auth.module';
     }
   ],
 })
-export class AppModule {}
+export class AppModule  implements OnModuleInit{
+  constructor(
+    private readonly seederRunner: SeederRunner,
+    private configService: ConfigService
+  ){}
+
+  async onModuleInit(){
+    Logger.log('AppModule initialized. Seeding database...');
+    const executedSeeders = this.configService.get<string>('EXECUTE_SEEDERS');
+    if(executedSeeders === 'true'){
+      Logger.log('Executing seeders...');
+      await this.seederRunner.runSeeds();
+    }else{
+      Logger.log('Seeders execution skipped.');
+    }
+
+    
+  }
+
+}

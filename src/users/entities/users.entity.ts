@@ -28,9 +28,9 @@ export class User {
     isActive: boolean;
 
     @Column('text', {
-        default: [UserRole.TUTOR]
+        default: UserRole.TUTOR
     })
-    rol: UserRole;
+    role: UserRole;
 
     @Column('text')
     cellphone: string;

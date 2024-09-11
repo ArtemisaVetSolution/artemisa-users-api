@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('Users')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(
