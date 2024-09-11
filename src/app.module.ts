@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { AllExceptionsFilter, ValidationExceptionFilter } from './common/errors/exception-filters';
 import { InterceptorsModule } from './common/interceptors/interceptors.module';
 import { CommonModule } from './common/common.module';
+import { AuthModule } from './auth/auth.module';
+
 
 
 
@@ -25,6 +27,7 @@ import { CommonModule } from './common/common.module';
     UsersModule,
     InterceptorsModule,
     CommonModule,
+    AuthModule,
   ],
   providers: [
     LoggerService,

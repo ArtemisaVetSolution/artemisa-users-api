@@ -31,7 +31,7 @@ export class ExceptionHandlerService {
       case '57P03': // Base de datos en modo de recuperación
         return new HttpException('Database in recovery mode, try again later', HttpStatus.SERVICE_UNAVAILABLE);
       default: // Error interno del servidor
-        return new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        return new HttpException(error.message || 'Internal server error', error.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

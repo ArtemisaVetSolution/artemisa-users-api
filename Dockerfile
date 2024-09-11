@@ -1,17 +1,23 @@
+# Utilizar Node.js 16 en Alpine Linux
+FROM node:16-alpine
 
-FROM node:18-alpine3.15
-
+# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
+# Copiar el archivo package.json y package-lock.json
 COPY package*.json ./
 
+# Instalar las dependencias del proyecto
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
 
+# Si nodemon no está en el package.json, puedes instalarlo globalmente
+RUN npm install -g nodemon
+
+# Copiar el resto de la aplicación
 COPY . .
 
-RUN npm run build
+# Exponer el puerto de la aplicación
+EXPOSE 3001
 
-EXPOSE 3000
-CMD [ "node", "dist/src/main" ]
+# Comando para iniciar la aplicación con nodemon (usamos legacy watch para evitar problemas de archivos)
+CMD ["nodemon", "--watch", "src", "--legacy-watch", "src/main.ts"]

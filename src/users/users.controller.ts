@@ -1,45 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, UseGuards } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
-// import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
+import { IUserService } from './interfaces/user-service.interface';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 
+@ApiTags('Users')
+// @UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    @Inject('IUserService')
+    private readonly usersService: IUserService
+  ) {}
 
-
-  @Post()
-  @CatchErrors()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
-
-  @Get()
-  @CatchErrors()
-  findAll() {
-    throw new Error('Error in UsersController.findAll');
-  }
 
   @Get(':id')
   @CatchErrors()
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findUserById(id);
   }
 
-
-  @Patch(':id')
+  @Get()
   @CatchErrors()
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  findAll() {
+    return this.usersService.findAllUsers();
   }
 
-  @Delete(':id')
-  @CatchErrors()
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
 }
+
+
+
