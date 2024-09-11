@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserRole } from 'src/common/enums/roles.enum';
 
-export class GetAllUserResponseDto {
-  @ApiProperty({ example: '93ff216c-f21f-4154-bdfb-7430a0491b0a' })
+export class GetUserResponseDto {
+  @ApiProperty({ example: 'd6045f0b-138e-4292-b908-bcbe8d415bb6' })
   id: string;
 
   @ApiProperty({ example: 'daniela@gmail.com' })
@@ -11,11 +11,8 @@ export class GetAllUserResponseDto {
   @ApiProperty({ example: 'Daniela Mendoza' })
   name: string;
 
-  @ApiProperty({ example: true })
-  isActive: boolean;
-
-  @ApiProperty({ example: ['tutor'], enum: UserRole, isArray: true })
-  roles: UserRole[];
+  @ApiProperty({ example: 'tutor', enum: UserRole})
+  role: UserRole;
 
   @ApiProperty({ example: '+57 3128889999' })
   cellphone: string;

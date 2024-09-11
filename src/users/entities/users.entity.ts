@@ -20,13 +20,6 @@ export class User {
     })
     password: string;
 
-    @Column('bool',
-        {
-            default: true
-        }
-    )
-    isActive: boolean;
-
     @Column('text', {
         default: UserRole.TUTOR
     })

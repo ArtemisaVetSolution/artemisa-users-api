@@ -32,14 +32,3 @@ export function ApiDocLoginUser <T> (entity: Type<T>){
     )
 }
 
-export function ApiDocGetAllUsers <T> (entity: Type<T>){
-    return applyDecorators(
-        ApiOperation({
-            summary: 'Get all users',
-            description: 'This endpoint allows to get all users'
-        }),
-        ApiBearerAuth(),
-        ApiSuccessResponsesArray(entity),
-        ApiUnauthorized()
-    )
-}
