@@ -8,22 +8,16 @@ import { Permission } from './entities/permissions.entity';
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature([User]),
-  TypeOrmModule.forFeature([Permission]),
+  TypeOrmModule.forFeature([User, Permission]),
   CommonModule],
   controllers: [UsersController],
   providers: [{
     provide: 'IUserService',
     useClass: UsersService
   },
-  UsersService
 ],
   exports: [
-    {
-      provide: 'IUserService',
-      useClass: UsersService,
-    },
-    UsersService,
+    'IUserService',
     TypeOrmModule
   ],
 })

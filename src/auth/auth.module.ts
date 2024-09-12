@@ -34,7 +34,6 @@ import { UsersService } from 'src/users/users.service';
       provide: 'IAuthService',
       useClass: AuthService,
     },
-    UsersService,
     JwtAuthGuard,
     JwtStrategy,
   ],

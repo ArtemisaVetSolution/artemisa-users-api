@@ -24,14 +24,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get<string>('JWT_SECRET'),
     });
   }
-  async validate(payload: JwtPayload): Promise<User> {
+  async validate(payload: JwtPayload): Promise<JwtPayload> {
   
-    const user = await this.usersService.findUserById(payload.id)    
+    const user = await this.usersService.findUserById(payload.id)     
   
     if (!user) {
       throw new UnauthorizedException('Token not valid');
     }
   
-    return user;
+    return payload;
   }
 }

@@ -8,4 +8,5 @@
   export interface IAuthService {
     register(createUserDto: CreateUserDto): Promise<string>;
     login(loginUserDto: LoginUserDto): Promise<LoginResponse>;
+  
   }

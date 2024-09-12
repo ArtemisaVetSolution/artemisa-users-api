@@ -15,9 +15,9 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') || 3000;
 
   SwaggerConfig(app)
-
+  
   app.setGlobalPrefix('api');
-
+  
   setupGlobalConfig(app, logger);
   await app.listen(port);
 

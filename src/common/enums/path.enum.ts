@@ -1,4 +1,5 @@
 export enum Path {
+    USERS =  'users',
     SERVICES = 'services',
     APPOINTMENTS = 'appointments',
     PATIENTS = 'patients',

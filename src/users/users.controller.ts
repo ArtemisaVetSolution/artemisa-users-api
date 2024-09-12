@@ -1,24 +1,26 @@
 import { Controller, Get, Body, Patch, Param, Delete, Inject, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 import { IUserService } from './interfaces/user-service.interface';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { GetUserResponseDto } from './dto/get-user-response.dto';
 import { ApiDocGetAllUsers, ApiDocGetUserById } from './decorators/users-swagger.decorator';
-import { PrivateService } from 'src/common/decorators/auth.decorator';
+import { Leaves, Path } from 'src/common/enums';
+import { PathName, VerifyAuthService } from 'src/auth/decorators/verify-auth.decorator';
+
 
 
 
 @ApiTags('Users')
 @ApiExtraModels(GetUserResponseDto)
+@PathName(Path.USERS)
 @Controller('users')
 export class UsersController {
   constructor(
     @Inject('IUserService')
     private readonly usersService: IUserService
   ) {}
-
-  @PrivateService()
+  
+  @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetUserById(GetUserResponseDto)
   @Get(':id')
   @CatchErrors()
@@ -26,7 +28,7 @@ export class UsersController {
     return this.usersService.findUserById(id);
   }
 
-  @PrivateService()
+  @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetAllUsers(GetUserResponseDto)
   @Get()
   @CatchErrors()

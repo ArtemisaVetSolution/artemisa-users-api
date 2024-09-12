@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,6 +15,7 @@ import { Permission } from 'src/users/entities';
 import { UsersService } from '../users/users.service';
 import { UserRole } from 'src/common/enums';
 import { log } from 'console';
+import { IUserService } from 'src/users/interfaces/user-service.interface';
 
 
 @Injectable()
@@ -23,7 +24,8 @@ export class AuthService implements IAuthService{
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly usersService: UsersService
+    @Inject('IUserService')
+    private readonly usersService: IUserService
   ) {}
 
   @CatchErrors() 
@@ -48,7 +50,7 @@ export class AuthService implements IAuthService{
       throw new UnauthorizedException('Invalid credentials');
     }
     const userPermissions = await this.getPermissionsByUserRole(user.role);
-    const payload: JwtPayload = { email: user.email, id: user.id, permisions: userPermissions };
+    const payload: JwtPayload = { email: user.email, id: user.id, permisions: userPermissions, role: user.role };
     const token = this.getJwtToken(payload);
     return {
       ...user,
