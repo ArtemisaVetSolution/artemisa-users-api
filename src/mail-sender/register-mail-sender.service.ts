@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { verificationRegisterEmailTemplate } from '../../mail-sender/emails/verification-register.email.template';
-import { MailConfig } from '../config/email.config';
 import { ConfigService } from '@nestjs/config';
-import { IConfirmationRegisterService } from '../../mail-sender/interfaces/confirmation-register-service.interface';
+import { MailConfig } from 'src/common/config/email.config';
+import { IConfirmationRegisterService } from './interfaces/confirmation-register-service.interface';
+import { verificationRegisterEmailTemplate } from 'src/mail-sender/emails/verification-register.email.template';
+
 
 
 @Injectable()
-export class MailSenderService extends MailConfig implements IConfirmationRegisterService{
+export class RegisterMailSenderService extends MailConfig implements IConfirmationRegisterService{
   constructor(
     private readonly configService: ConfigService
   ) {
@@ -24,3 +25,4 @@ export class MailSenderService extends MailConfig implements IConfirmationRegist
     await this.sendMail(mailOptions);
   }
 }
+

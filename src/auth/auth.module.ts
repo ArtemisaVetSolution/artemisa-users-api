@@ -11,13 +11,15 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
 import { Permission } from 'src/users/entities';
-import { UsersService } from 'src/users/users.service';
+import { CommonModule } from 'src/common/common.module';
+import { MailsenderserviceModule } from 'src/mail-sender/mail-sender-service.module';
+import { Token } from 'src/tokens/entities/token.entity';
+import { TokensModule } from 'src/tokens/tokens.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Permission]),
-    ConfigModule,
-    PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -26,7 +28,12 @@ import { UsersService } from 'src/users/users.service';
       }),
       inject: [ConfigService],
     }),
-    UsersModule, // Asegúrate de importar UsersModule aquí
+    UsersModule,
+    TokensModule,
+    CommonModule,
+    MailsenderserviceModule,
+    ConfigModule,
+    PassportModule
   ],
   controllers: [AuthController],
   providers: [

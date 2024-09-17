@@ -34,6 +34,7 @@
     "@nestjs/typeorm": "^10.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/passport-jwt": "^4.0.1",
+    "artemisa-users-api": "file:",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",

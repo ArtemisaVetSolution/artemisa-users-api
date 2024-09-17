@@ -6,7 +6,7 @@ import { JwtPayload } from '../interfaces';
 import { Leaves, Path } from 'src/common/enums';
 
 @Injectable()
-export class PermissionsGuard implements CanActivate {
+export class LeavesGuard implements CanActivate {
   constructor(
     private reflector: Reflector
   ){}

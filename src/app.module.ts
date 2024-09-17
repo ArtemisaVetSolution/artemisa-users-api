@@ -10,6 +10,8 @@ import { InterceptorsModule } from './common/interceptors/interceptors.module';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { PermissionsSeeder, SeederRunner, UsersSeeder } from './common/seeders';
+import { MailsenderserviceModule } from './mail-sender/mail-sender-service.module';
+import { TokensModule } from './tokens/tokens.module';
 
 
 
@@ -29,6 +31,8 @@ import { PermissionsSeeder, SeederRunner, UsersSeeder } from './common/seeders';
     InterceptorsModule,
     CommonModule,
     AuthModule,
+    MailsenderserviceModule,
+    TokensModule,
   ],
   providers: [
     UsersSeeder,
@@ -46,7 +50,7 @@ import { PermissionsSeeder, SeederRunner, UsersSeeder } from './common/seeders';
     {
       provide: 'ILoggerService',
       useClass: LoggerService,
-    }
+    },
   ],
 })
 export class AppModule  implements OnModuleInit{

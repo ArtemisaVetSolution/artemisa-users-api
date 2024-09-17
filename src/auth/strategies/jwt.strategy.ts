@@ -31,6 +31,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException('Token not valid');
     }
+
+    console.log("user payload", payload);
+    
   
     return payload;
   }

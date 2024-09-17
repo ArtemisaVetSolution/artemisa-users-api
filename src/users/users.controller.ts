@@ -6,6 +6,8 @@ import { GetUserResponseDto } from './dto/get-user-response.dto';
 import { ApiDocGetAllUsers, ApiDocGetUserById } from './decorators/users-swagger.decorator';
 import { Leaves, Path } from 'src/common/enums';
 import { PathName, VerifyAuthService } from 'src/auth/decorators/verify-auth.decorator';
+import { User } from './decorators/user-payload-param.decorator';
+import { JwtPayload } from 'src/auth/interfaces';
 
 
 
@@ -34,6 +36,13 @@ export class UsersController {
   @CatchErrors()
   findAll() {
     return this.usersService.findAllUsers();
+  }
+
+  @VerifyAuthService(Leaves.CAN_UPDATE)
+  @Patch('change-password')
+  @CatchErrors()
+  changePasswordUserRequest(@User() user: JwtPayload) {
+    return this.usersService.forgotPasswordRequest(user.id);
   }
 
 }

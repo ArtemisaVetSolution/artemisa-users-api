@@ -1,12 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Inject, UseGuards } from '@nestjs/common';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
-import { CreateUserDto, LoginUserDto, RegisterResponseDto} from './dto';
+import { CreateUserDto, LoginUserDto, RegisterResponseDto } from './dto';
 import { IAuthService } from './interfaces/auth-service.interface';
 import { ApiDocLoginUser, ApiDocRegisterUser } from './decorators/auth-swagger.decorator';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+
 
 
 @ApiTags('Auth')
@@ -14,7 +15,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(@Inject('IAuthService')
-  private readonly authService: IAuthService) {}
+  private readonly authService: IAuthService) { }
 
   @ApiDocRegisterUser(RegisterResponseDto)
   @Post('register')

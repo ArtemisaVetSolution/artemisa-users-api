@@ -1,12 +1,12 @@
 import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard, PermissionsGuard } from "../guards";
+import { JwtAuthGuard, LeavesGuard } from "../guards";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Leaves, Path } from "src/common/enums";
 
 export function VerifyAuthService(permissions: Leaves){
     return applyDecorators(
         SetMetadata('permissions', permissions),
-        UseGuards(JwtAuthGuard, PermissionsGuard),
+        UseGuards(JwtAuthGuard, LeavesGuard),
         ApiBearerAuth('access-token')
     );
 }

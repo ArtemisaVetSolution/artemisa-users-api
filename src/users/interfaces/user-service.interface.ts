@@ -6,5 +6,6 @@ export interface IUserService {
     findUserById(id: string): Promise<User>;
     findAllUsers(): Promise<User[]>;
     getPermissionsByUserRole(role: UserRole): Promise<Permission[]>
+    forgotPasswordRequest(id: string): Promise<void>;
 
 }

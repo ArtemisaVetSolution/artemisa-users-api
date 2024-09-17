@@ -2,9 +2,10 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 
 import { UserRole } from "src/common/enums/roles.enum";
 import { Path } from "src/common/enums/path.enum";
+import { AuditableEntity } from "src/common/entities/auditable.entity";
 
 @Entity('permissions')
-export class Permission{
+export class Permission extends AuditableEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -28,30 +29,6 @@ export class Permission{
 
     @Column('bool', { name: 'can_read_own' })
     canReadOwn: boolean
-
-    @CreateDateColumn({
-        name: 'created_at',
-        type: 'timestamptz',
-        default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-        select: false,
-    })
-    createdAt: Date;
-
-    @CreateDateColumn({
-        name: 'updated_at',
-        type: 'timestamptz',
-        default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-        onUpdate: `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-        select: false,
-    })
-    updatedAt: Date;
-
-    @CreateDateColumn({
-        name: 'deleted_at',
-        type: 'timestamptz',
-        select: false,
-    })
-    deletedAt: Date;
 
 
 }

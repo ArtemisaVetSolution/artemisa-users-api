@@ -1,15 +1,17 @@
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+import { AuditableEntity } from "src/common/entities/auditable.entity";
 import { UserRole } from "src/common/enums/roles.enum";
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Token } from "src/tokens/entities/token.entity";
 
 
 @Entity('users')
-export class User {
+export class User extends AuditableEntity {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column('text')
-    @Unique(['email'])
     email: string;
     
     @Column('text')
@@ -28,29 +30,14 @@ export class User {
     @Column('text')
     cellphone: string;
 
-    @CreateDateColumn({
-        name: 'created_at',
-        type: 'timestamptz',
-        default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
+    @Column('bool', {
+        default: false,
         select: false,
     })
-    createdAt: Date;
+    isVerified: boolean;
 
-    @UpdateDateColumn({
-        name: 'updated_at',
-        type: 'timestamptz',
-        default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-        onUpdate: `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-        select: false,
-    })
-    updatedAt: Date;
-
-    @DeleteDateColumn({
-        name: 'deleted_at',
-        type: 'timestamptz',
-        select: false,
-    })
-    deletedAt: Date;
+    @OneToMany(() => Token, token => token.user)
+    tokens: Token[];
 
     @BeforeInsert()
     checkFieldsBeforeInsert(){
