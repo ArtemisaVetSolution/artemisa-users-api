@@ -12,6 +12,7 @@ import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 import { ITokenService } from './interfaces/token-service.interface';
 
 @Injectable()
+@CatchErrors()
 export class TokensService implements ITokenService {
   constructor(
     @InjectRepository(Token)
@@ -21,7 +22,6 @@ export class TokensService implements ITokenService {
     private jwtService: JwtService,
   ) { }
 
-  @CatchErrors()
   async createToken(userId: User, type: Tokens): Promise<string> {
     const payload: JwtPayloadEmail = { userId: userId.id, type};
     const tokenString = this.getJwtToken(payload);

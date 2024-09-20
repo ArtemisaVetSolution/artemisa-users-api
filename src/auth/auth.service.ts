@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, LoggerService, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
@@ -18,8 +18,11 @@ import { USERS_URL } from 'src/common/utilities/api-url.utility';
 import { IConfirmationRegisterService } from 'src/mail-sender/interfaces/confirmation-register-service.interface';
 import { Token } from 'src/tokens/entities/token.entity';
 import { ITokenService } from 'src/tokens/interfaces/token-service.interface';
+import { ExceptionHandlerService } from 'src/common/services/exception-handler.service';
+import { ILoggerService } from 'src/common/interfaces';
 
 @Injectable()
+@CatchErrors()
 export class AuthService implements IAuthService {
   constructor(
     @InjectRepository(User)
@@ -33,10 +36,13 @@ export class AuthService implements IAuthService {
     @Inject('IConfirmationRegisterService')
     private readonly confirmationRegisterService: IConfirmationRegisterService,
     private readonly jwtService: JwtService,
+    private readonly exceptionHandlerService: ExceptionHandlerService,
+    @Inject('ILoggerService')
+    private readonly loggerService: ILoggerService,
 
   ) { }
 
-  @CatchErrors()
+  // @CatchErrors()
   async register(createUserDto: CreateUserDto) {
     const userExists = await this.userRepository.findOne({
       where: { email: createUserDto.email },
@@ -65,7 +71,7 @@ export class AuthService implements IAuthService {
     return user.id;
   }
 
-  @CatchErrors()
+  // @CatchErrors()
   async login(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
     const user = await this.validateUser(email, password);
@@ -81,7 +87,7 @@ export class AuthService implements IAuthService {
     }
   }
 
-  @CatchErrors()
+  
   async getPermissionsByUserRole(role: UserRole) {
     const permissions: Permission[] = await this.usersService.getPermissionsByUserRole(role);
 

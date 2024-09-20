@@ -39,18 +39,6 @@ import { TokensModule } from './tokens/tokens.module';
     PermissionsSeeder,
     SeederRunner,
     LoggerService,
-    {
-      provide: 'APP_FILTER',
-      useClass: AllExceptionsFilter,
-    },
-    {
-      provide: 'APP_FILTER',
-      useClass: ValidationExceptionFilter,
-    },
-    {
-      provide: 'ILoggerService',
-      useClass: LoggerService,
-    },
   ],
 })
 export class AppModule  implements OnModuleInit{

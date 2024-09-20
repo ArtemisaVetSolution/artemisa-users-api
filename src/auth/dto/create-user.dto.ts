@@ -10,8 +10,8 @@ export class CreateUserDto {
     email: string;
     
     @ApiProperty({ description: "User's name", example: 'Ana Alzate'})
-    @IsString()
-    @MinLength(1)
+    // @IsString()
+    // @MinLength(1)
     name: string;
     
     @ApiProperty({ description: "User's password, the password must have a Uppercase, lowercase letter and a number", example: 'Daniela.123'})

@@ -12,7 +12,7 @@ import { USERS_URL } from 'src/common/utilities/api-url.utility';
 
 import { IForgotPasswordService } from 'src/mail-sender/interfaces/forgot-password-service.interface';
 
-
+@CatchErrors()
 @Injectable()
 export class UsersService implements IUserService {
   constructor(
@@ -26,19 +26,19 @@ export class UsersService implements IUserService {
     private readonly forgotPasswordService: IForgotPasswordService,
   ) {}
 
-  @CatchErrors()
+  // @CatchErrors()
   async findUserById(id: string) {
     const user: User = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
-  @CatchErrors()
+  // @CatchErrors()
   async findAllUsers() {
     return await this.userRepository.find();
   }
 
-  @CatchErrors()
+  // @CatchErrors()
   async getPermissionsByUserRole(role: UserRole){
     const permissions: Permission[] = await this.permissionRepository.findBy({ role });    
     if (!permissions) throw new NotFoundException('Permissions not found');
@@ -46,7 +46,7 @@ export class UsersService implements IUserService {
   }
 
   //Continuar cuando se pueda implementar el front
-  @CatchErrors()
+  // @CatchErrors()
   async forgotPasswordRequest(id: string){
     const user: User = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');

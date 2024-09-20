@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Patch, Param, Delete, Inject, UseGuards, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, Inject, UseGuards, ParseUUIDPipe, Catch } from '@nestjs/common';
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 import { IUserService } from './interfaces/user-service.interface';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
@@ -11,7 +11,7 @@ import { JwtPayload } from 'src/auth/interfaces';
 
 
 
-
+@CatchErrors()
 @ApiTags('Users')
 @ApiExtraModels(GetUserResponseDto)
 @PathName(Path.USERS)
@@ -25,7 +25,7 @@ export class UsersController {
   @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetUserById(GetUserResponseDto)
   @Get(':id')
-  @CatchErrors()
+  // @CatchErrors()
   findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.usersService.findUserById(id);
   }
@@ -33,14 +33,14 @@ export class UsersController {
   @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetAllUsers(GetUserResponseDto)
   @Get()
-  @CatchErrors()
+  // @CatchErrors()
   findAll() {
     return this.usersService.findAllUsers();
   }
 
   @VerifyAuthService(Leaves.CAN_UPDATE)
   @Patch('change-password')
-  @CatchErrors()
+  // @CatchErrors()
   changePasswordUserRequest(@User() user: JwtPayload) {
     return this.usersService.forgotPasswordRequest(user.id);
   }

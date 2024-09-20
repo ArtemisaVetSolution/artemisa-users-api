@@ -6,6 +6,7 @@ import { CatchErrors } from "../decorators/catch-errors.decorator";
 
 
 @Injectable()
+@CatchErrors()
 export class SeederRunner{
     constructor(
         private readonly usersSeeder: UsersSeeder,
@@ -13,7 +14,6 @@ export class SeederRunner{
     ){}
 
 
-    @CatchErrors()
     async runSeeds() : Promise<void>{
         await this.permissionsSeeder.run();
         await this.usersSeeder.run();
