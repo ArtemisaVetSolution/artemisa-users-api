@@ -11,8 +11,8 @@ import { JwtPayloadEmail } from 'src/auth/interfaces/jwt-payload-email.interface
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 import { ITokenService } from './interfaces/token-service.interface';
 
+// @CatchErrors()
 @Injectable()
-@CatchErrors()
 export class TokensService implements ITokenService {
   constructor(
     @InjectRepository(Token)

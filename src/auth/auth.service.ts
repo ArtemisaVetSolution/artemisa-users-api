@@ -42,7 +42,6 @@ export class AuthService implements IAuthService {
 
   ) { }
 
-  // @CatchErrors()
   async register(createUserDto: CreateUserDto) {
     const userExists = await this.userRepository.findOne({
       where: { email: createUserDto.email },
@@ -71,7 +70,6 @@ export class AuthService implements IAuthService {
     return user.id;
   }
 
-  // @CatchErrors()
   async login(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
     const user = await this.validateUser(email, password);
@@ -80,7 +78,9 @@ export class AuthService implements IAuthService {
     }
     const userPermissions = await this.getPermissionsByUserRole(user.role);
     const payload: JwtPayload = { email: user.email, id: user.id, permisions: userPermissions, role: user.role };
-    const token = this.getJwtToken(payload);
+    const token = await this.getJwtToken(payload);
+    console.log(token);
+    
     return {
       ...user,
       token,
@@ -115,8 +115,8 @@ export class AuthService implements IAuthService {
 
   }
 
-  private getJwtToken(payload: JwtPayload): string {
-    const token = this.jwtService.sign(payload);
+  private async getJwtToken(payload: JwtPayload): Promise<string> {
+    const token = await this.jwtService.sign(payload);
     return token;
   }
 

@@ -33,14 +33,12 @@ export class AuthController {
 
   @ApiDocLoginUser(LoginResponseDto)
   @Post('login')
-  // @CatchErrors()
   login(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('validate-jwt')
-  // @CatchErrors()
   validateJwt(): { valid: boolean } {
     return { valid: true };
 

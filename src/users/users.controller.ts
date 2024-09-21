@@ -25,7 +25,6 @@ export class UsersController {
   @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetUserById(GetUserResponseDto)
   @Get(':id')
-  // @CatchErrors()
   findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.usersService.findUserById(id);
   }
@@ -33,14 +32,12 @@ export class UsersController {
   @VerifyAuthService(Leaves.CAN_READ)
   @ApiDocGetAllUsers(GetUserResponseDto)
   @Get()
-  // @CatchErrors()
   findAll() {
     return this.usersService.findAllUsers();
   }
 
   @VerifyAuthService(Leaves.CAN_UPDATE)
   @Patch('change-password')
-  // @CatchErrors()
   changePasswordUserRequest(@User() user: JwtPayload) {
     return this.usersService.forgotPasswordRequest(user.id);
   }
