@@ -79,7 +79,6 @@ export class AuthService implements IAuthService {
     const userPermissions = await this.getPermissionsByUserRole(user.role);
     const payload: JwtPayload = { email: user.email, name: user.name, id: user.id, permisions: userPermissions, role: user.role };
     const token = await this.getJwtToken(payload);
-    console.log(token);
     
     return {
       ...user,
@@ -98,7 +97,7 @@ export class AuthService implements IAuthService {
   private async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { password: true, email: true, id: true, role: true, isVerified: true }
+      select: { password: true, email: true, id: true, role: true, isVerified: true, name: true }
     });
     if (!user)
       return null;
@@ -107,7 +106,7 @@ export class AuthService implements IAuthService {
     const password = user.password
     if (bcrypt.compareSync(pass, password)) {
       const { password, ...result } = user;
-      return { email: user.email, id: user.id, role: user.role };
+      return { email: user.email, id: user.id, role: user.role, name: user.name };
     } else {
       console.log('Password does not match');
       return null;
