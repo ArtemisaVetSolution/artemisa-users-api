@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,8 +10,10 @@ import { Tokens } from 'src/common/enums';
 import { JwtPayloadEmail } from 'src/auth/interfaces/jwt-payload-email.interface';
 import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
 import { ITokenService } from './interfaces/token-service.interface';
+import { ExceptionHandlerService } from 'src/common/services/exception-handler.service';
+import { ILoggerService } from 'src/common/interfaces';
 
-// @CatchErrors()
+@CatchErrors()
 @Injectable()
 export class TokensService implements ITokenService {
   constructor(
@@ -20,11 +22,14 @@ export class TokensService implements ITokenService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService,
+    private readonly exceptionHandlerService: ExceptionHandlerService,
+    @Inject('ILoggerService')
+    private readonly loggerService: ILoggerService,
   ) { }
 
   async createToken(userId: User, type: Tokens): Promise<string> {
     const payload: JwtPayloadEmail = { userId: userId.id, type};
-    const tokenString = this.getJwtToken(payload);
+    const tokenString = await this.getJwtToken(payload);
 
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + 30);
@@ -84,8 +89,8 @@ export class TokensService implements ITokenService {
 
 
 
-  private getJwtToken(payload: JwtPayloadEmail): string {
-    const token = this.jwtService.sign(payload, { expiresIn: '30m' });
+  private async getJwtToken(payload: JwtPayloadEmail): Promise <string> {
+    const token = await this.jwtService.sign(payload, { expiresIn: '30m' });
     return token;
   }
 

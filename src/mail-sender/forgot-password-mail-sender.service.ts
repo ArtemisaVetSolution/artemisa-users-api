@@ -27,7 +27,5 @@ export class  ForgotPasswordMailSenderService extends MailConfig implements IFor
   }
 }
 
-function sendForgotPasswordEmail(name: string, verificationUrl: string) {
-  throw new Error('Function not implemented.');
-}
+
 

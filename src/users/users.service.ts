@@ -8,9 +8,11 @@ import { IUserService } from './interfaces/user-service.interface';
 import { Tokens, UserRole } from 'src/common/enums';
 import { Permission, User } from './entities';
 import { ITokenService } from 'src/tokens/interfaces/token-service.interface';
-import { USERS_URL } from 'src/common/utilities/api-url.utility';
+import { FRONT_URL } from 'src/common/utilities/api-url.utility';
 
 import { IForgotPasswordService } from 'src/mail-sender/interfaces/forgot-password-service.interface';
+import { ExceptionHandlerService } from 'src/common/services/exception-handler.service';
+import { ILoggerService } from 'src/common/interfaces';
 
 @CatchErrors()
 @Injectable()
@@ -24,36 +26,45 @@ export class UsersService implements IUserService {
     private readonly tokenService: ITokenService,
     @Inject('IForgotPasswordService')
     private readonly forgotPasswordService: IForgotPasswordService,
-  ) {}
+    private readonly exceptionHandlerService: ExceptionHandlerService,
+    @Inject('ILoggerService')
+    private readonly loggerService: ILoggerService,
+  ) { }
 
-  // @CatchErrors()
+
   async findUserById(id: string) {
     const user: User = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
-  // @CatchErrors()
   async findAllUsers() {
     return await this.userRepository.find();
   }
 
-  // @CatchErrors()
-  async getPermissionsByUserRole(role: UserRole){
-    const permissions: Permission[] = await this.permissionRepository.findBy({ role });    
+  async getPermissionsByUserRole(role: UserRole) {
+    const permissions: Permission[] = await this.permissionRepository.findBy({ role });
     if (!permissions) throw new NotFoundException('Permissions not found');
     return permissions;
   }
 
-  //Continuar cuando se pueda implementar el front
-  // @CatchErrors()
-  async forgotPasswordRequest(id: string){
-    const user: User = await this.userRepository.findOne({ where: { id } });
-    if (!user) throw new NotFoundException('User not found');
-    const token = await this.tokenService.createToken(user, Tokens.RESET_PASSWORD);
-    const verificationUrl = `${USERS_URL}/Aqui-debe-ir-la-url-del-front=${token}`;
-    await this.forgotPasswordService.sendForgotPasswordEmail(user.email, user.name, verificationUrl);
+  async forgotPasswordRequest(email: string) {
+    console.log("email del usuario", email);
+    const user: User = await this.userRepository.createQueryBuilder("user")
+        .addSelect("user.isVerified")
+        .where("user.email = :email", { email })
+        .getOne();
     
-  }
+    if (!user) throw new NotFoundException('User not found');
 
+    if (user.isVerified) {
+      const token = await this.tokenService.createToken(user, Tokens.RESET_PASSWORD);
+      const verificationUrl = `${FRONT_URL}/recover-password-new-pass?token=${token}`;
+      await this.forgotPasswordService.sendForgotPasswordEmail(user.email, user.name, verificationUrl);
+    } else {
+      throw new NotFoundException('User not verified');
+
+    }
+
+  }
 }

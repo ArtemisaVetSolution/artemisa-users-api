@@ -6,6 +6,7 @@ import { TokensController } from './tokens.controller';
 import { Token } from './entities/token.entity';
 import { TokensService } from './tokens.service';
 import { UsersModule } from 'src/users/users.module';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from 'src/users/users.module';
       }),
     }),
     forwardRef(() => UsersModule),
+    CommonModule
 
 ],
   controllers: [TokensController],
