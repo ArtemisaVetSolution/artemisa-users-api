@@ -10,7 +10,7 @@ export const verificationRegisterEmailTemplate = (name: string, url: string) => 
         <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0;">
         <div style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;   box-shadow: 0px 3px 12px rgb(47 43 61 / 0.14);" >
              <div style="text-align: center; margin-bottom: 20px;">
-                <img src="https://i.ibb.co/NTy9Rb2/logo-artemisa-2.png" alt="Logo de Artemisa" style="width: 30vw; height: auto;">
+                <img src="https://i.ibb.co/NTy9Rb2/logo-artemisa-2.png" alt="Logo de Artemisa" style="width: 20vw; height: auto;">
             </div>
             <h2 style="color: #181e4b; text-align: center;">Verificación de Correo Electrónico</h2>
             <p style="color: #333;">Hola <span style="color: #181e4b; font-weight: bold;">${name}</span></p>
