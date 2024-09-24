@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, UseGuards } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
-import { CatchErrors } from 'src/common/decorators/catch-errors.decorator';
+import { Controller, Get, Body, Patch, Param, Delete, Inject, UseGuards, ParseUUIDPipe, Post } from '@nestjs/common';
 import { IUserService } from './interfaces/user-service.interface';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { GetUserResponseDto, EmailDto } from './dto';
+import { ApiDocGetAllUsers, ApiDocGetUserById } from './decorators/users-swagger.decorator';
+import { Leaves, Path } from 'src/common/enums';
+import { PathName, VerifyAuthService } from 'src/auth/decorators/verify-auth.decorator';
 
 
 @ApiTags('Users')
-// @UseGuards(JwtAuthGuard)
+@ApiExtraModels(GetUserResponseDto)
+@PathName(Path.USERS)
 @Controller('users')
 export class UsersController {
   constructor(
@@ -15,18 +17,26 @@ export class UsersController {
     private readonly usersService: IUserService
   ) {}
 
+  @Post('change-password')
+  changePasswordUserRequest(@Body() emailDto: EmailDto) {
+    return this.usersService.forgotPasswordRequest(emailDto.email);
+  }
 
+  
+  @VerifyAuthService(Leaves.CAN_READ)
+  @ApiDocGetUserById(GetUserResponseDto)
   @Get(':id')
-  @CatchErrors()
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.usersService.findUserById(id);
   }
 
+  @VerifyAuthService(Leaves.CAN_READ)
+  @ApiDocGetAllUsers(GetUserResponseDto)
   @Get()
-  @CatchErrors()
   findAll() {
     return this.usersService.findAllUsers();
   }
+
 
 }
 

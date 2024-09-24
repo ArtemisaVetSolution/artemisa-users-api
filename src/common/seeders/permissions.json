@@ -1,0 +1,73 @@
+[
+  { "role": "admin", "path": "services", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "services", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "services", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "collaborator", "path": "services", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "services", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "appointments", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "appointments", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "appointments", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "appointments", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "appointments", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "patients", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "patients", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "patients", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "patients", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "patients", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "tutors", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "tutors", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "tutors", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "tutors", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": true },
+  { "role": "pet_shop_manager", "path": "tutors", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "collaborators", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "collaborators", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "tutor", "path": "collaborators", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "collaborator", "path": "collaborators", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "pet_shop_manager", "path": "collaborators", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+
+  { "role": "admin", "path": "orders", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "orders", "canCreate": false, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "orders", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "orders", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": true },
+  { "role": "pet_shop_manager", "path": "orders", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "diagnostic_aids", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "diagnostic_aids", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "diagnostic_aids", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "diagnostic_aids", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "diagnostic_aids", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "medical_history_record", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "medical_history_record", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "medical_history_record", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "medical_history_record", "canCreate": true, "canUpdate": true, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "medical_history_record", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "payments", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "payments", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "payments", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "payments", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "pet_shop_manager", "path": "payments", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "ia_suggestions", "canCreate": true, "canUpdate": false, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "ia_suggestions", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "tutor", "path": "ia_suggestions", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+  { "role": "collaborator", "path": "ia_suggestions", "canCreate": true, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "ia_suggestions", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": false, "canRead": false },
+
+  { "role": "admin", "path": "products", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "products", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "products", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "collaborator", "path": "products", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+  { "role": "pet_shop_manager", "path": "products", "canCreate": false, "canUpdate": false, "canDelete": false, "canReadOwn": true, "canRead": true },
+
+  { "role": "admin", "path": "users", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "appointment_manager", "path": "users", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true },
+  { "role": "tutor", "path": "users", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": false },
+  { "role": "collaborator", "path": "users", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": false },
+  { "role": "pet_shop_manager", "path": "users", "canCreate": true, "canUpdate": true, "canDelete": true, "canReadOwn": true, "canRead": true }
+]

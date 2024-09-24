@@ -28,7 +28,7 @@ export class ValidationExceptionFilter implements ExceptionFilter {
 
       const errorResponse = {
         statusCode: status,
-        error: 'Bad Request',
+        error: 'Bad Request desde validation filter',
         message: formattedErrors,
         timestamp: new Date().toISOString(),
         path: request.url,

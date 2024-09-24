@@ -1,24 +1,34 @@
-// import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-// import { UserRole } from "src/common/enums/roles.enum";
-// import { Path } from "src/common/enums/path.enum";
+import { UserRole } from "src/common/enums/roles.enum";
+import { Path } from "src/common/enums/path.enum";
+import { AuditableEntity } from "src/common/entities/auditable.entity";
 
-// @Entity('permissions')
-// export class Permission{
-//     @PrimaryGeneratedColumn()
-//     id: number
+@Entity('permissions')
+export class Permission extends AuditableEntity {
+    @PrimaryGeneratedColumn()
+    id: number
 
-//     @Column('text')
-//     rol: UserRole
+    @Column('text')
+    role: UserRole
 
-//     @Column('text')
-//     path: Path
+    @Column('text')
+    path: Path
 
-//     @Column('bool')
+    @Column('bool', { name: 'can_create' })
+    canCreate: boolean
+
+    @Column('bool', { name: 'can_update' })
+    canUpdate: boolean
+
+    @Column('bool', { name: 'can_delete' })
+    canDelete: boolean
+
+    @Column('bool', { name: 'can_read' })
+    canRead: boolean
+
+    @Column('bool', { name: 'can_read_own' })
+    canReadOwn: boolean
 
 
-
-
-
-
-// }
+}

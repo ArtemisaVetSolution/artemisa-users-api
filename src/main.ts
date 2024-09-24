@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { setupGlobalConfig } from './common/config/global-config';
 import { LoggerService } from './common/services';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { SwaggerConfig } from './common/config/swagger.config';
 
 async function bootstrap() {
@@ -14,11 +13,12 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3000;
+  app.enableCors();
 
   SwaggerConfig(app)
-
+  
   app.setGlobalPrefix('api');
-
+  
   setupGlobalConfig(app, logger);
   await app.listen(port);
 

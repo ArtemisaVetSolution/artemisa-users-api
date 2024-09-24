@@ -17,7 +17,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly configService: ConfigService,
   ) {
     const secret = configService.get<string>('JWT_SECRET');
-    console.log('secret', secret);
     
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -25,24 +24,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get<string>('JWT_SECRET'),
     });
   }
-  async validate(payload: JwtPayload): Promise<User> {
-    console.log('payload' ,payload);
-    
+  async validate(payload: JwtPayload): Promise<JwtPayload> {
   
-    const user = await this.usersService.findUserById(payload.id)
-    console.log('user', user);
-    
+    const user = await this.usersService.findUserById(payload.id)     
   
     if (!user) {
       throw new UnauthorizedException('Token not valid');
     }
+
+    console.log("user payload", payload);
+    
   
-    if (!user.isActive) {
-      throw new UnauthorizedException('User is inactive, validate with admin');
-    }
-  
-    console.log({ user });
-  
-    return user;
+    return payload;
   }
 }

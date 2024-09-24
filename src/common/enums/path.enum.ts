@@ -1,9 +1,10 @@
 export enum Path {
+    USERS =  'users',
     SERVICES = 'services',
     APPOINTMENTS = 'appointments',
     PATIENTS = 'patients',
     TUTORS = 'tutors',
-    COLLABORATOR = 'collaborator',
+    COLLABORATOR = 'collaborators',
     ORDERS = 'orders',
     DIAGNOSTIC_AIDS = 'diagnostic_aids',
     MEDICAL_HISTORY_RECORD = 'medical_history_record',
