@@ -76,8 +76,11 @@ export class AuthService implements IAuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
+    const roleUpperCased = user.role.toUpperCase();
+    console.log(roleUpperCased);
+    
     const userPermissions = await this.getPermissionsByUserRole(user.role);
-    const payload: JwtPayload = { email: user.email, name: user.name, id: user.id, permisions: userPermissions, role: user.role };
+    const payload: JwtPayload = { email: user.email, name: user.name, id: user.id, roleUser: roleUpperCased, permisions: userPermissions, role: user.role };
     const token = await this.getJwtToken(payload);
     
     return {

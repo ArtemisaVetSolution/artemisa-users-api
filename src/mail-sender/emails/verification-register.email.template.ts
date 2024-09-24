@@ -9,14 +9,14 @@ export const verificationRegisterEmailTemplate = (name: string, url: string) => 
         </head>
         <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0;">
         <div style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;   box-shadow: 0px 3px 12px rgb(47 43 61 / 0.14);" >
-            <div style="text-align: center; margin-bottom: 20px;">
-            <img src="Buscar Logo Para Artemisa" alt="Logo de la Compañía" style="width: 100px; height: auto;">
+             <div style="text-align: center; margin-bottom: 20px;">
+                <img src="https://i.ibb.co/NTy9Rb2/logo-artemisa-2.png" alt="Logo de Artemisa" style="width: 30vw; height: auto;">
             </div>
             <h2 style="color: #181e4b; text-align: center;">Verificación de Correo Electrónico</h2>
             <p style="color: #333;">Hola <span style="color: #181e4b; font-weight: bold;">${name}</span></p>
             <p style="color: #333;">Por favor verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
             <div style="text-align: center; margin: 20px 0;">
-            <a target="_blank" href="${url}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: #6B5CFF; text-decoration: none; border-radius: 5px;">
+            <a target="_blank" href="${url}" style="display: inline-block; text-align: center; padding: 10px 20px; font-size: 16px; color: white; background-color: #ed411A; text-decoration: none; border-radius: 5px;">
                 Verificar Correo
             </a>
             </div>

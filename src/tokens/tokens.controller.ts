@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { Body, Controller, Get, Inject, Patch, Query, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Inject, Patch, Query, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { registrationSuccessEmailTemplate } from 'src/mail-sender/emails/registration-success.email.template';
@@ -33,22 +33,14 @@ export class TokensController {
   }
 
   @Patch('change-password')
-  async changePassword(@Query('token') token: string, @Body()newPassword: NewPasswordDto, @Res() res: Response) {
-    try {
+  async changePassword(@Query('token') token: string, @Body()newPassword: NewPasswordDto) {
+
       const { password } = newPassword;
       const tokenVerified = await this.tokensService.verifiTokenChangePassworg(token, password);
-      if (!tokenVerified) {
-        return res.status(400).json({ message: 'Error changing password' });
-      }
-   
-      return res.status(200).json({ message: 'Password changed successfully' });
-      
-    } catch (error) { 
-      if (!res.headersSent) {
-        res.status(500).json({ message: 'Error changing password', error: error.message });
-      }
-    }
+      if (!tokenVerified) 
+        throw new BadRequestException('Error changing password');
 
+      return { message: 'Password changed successfully' }
   }
 
 }
